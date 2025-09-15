@@ -296,7 +296,7 @@ def get_menu_web():
                 <br>
                 <hr>
                 <p style="text-align: center; color: #666; font-size: 12px;">
-                    💡 <strong>팁:</strong><br>
+                     <strong>팁:</strong><br>
                     • API 형태: <a href="/menu?date={date_str}">/menu?date={date_str}</a><br>
                     • 다른 날짜: <a href="/menu-web?date=2025-09-16">/menu-web?date=YYYY-MM-DD</a><br>
                     • 카카오톡 봇에 "메뉴" 메시지를 보내보세요!
@@ -358,7 +358,7 @@ def stop_scheduler():
 def oauth_authorize():
     """카카오 OAuth 인증 시작 (IP 제한)"""
     rest_api_key = os.getenv('KAKAO_REST_API_KEY')
-    redirect_uri = f"http://210.107.197.228:{os.getenv('FLASK_PORT', 5003)}/oauth/callback"
+    redirect_uri = f"http://localhost:{os.getenv('FLASK_PORT', 5003)}/oauth/callback"
     
     auth_url = f"https://kauth.kakao.com/oauth/authorize?client_id={rest_api_key}&redirect_uri={redirect_uri}&response_type=code&scope=talk_message"
     
@@ -381,7 +381,7 @@ def oauth_callback():
         # 액세스 토큰 요청
         token_url = "https://kauth.kakao.com/oauth/token"
         rest_api_key = os.getenv('KAKAO_REST_API_KEY')
-        redirect_uri = f"http://210.107.197.228:{os.getenv('FLASK_PORT', 5003)}/oauth/callback"
+        redirect_uri = f"http://localhost:{os.getenv('FLASK_PORT', 5003)}/oauth/callback"
         
         token_data = {
             'grant_type': 'authorization_code',
@@ -474,47 +474,8 @@ def test_message():
 
 @app.route('/channel-setup')
 def channel_setup():
-    """카카오톡 채널 설정 안내"""
-    return '''
-    <h2>카카오톡 채널을 통한 다중 사용자 메시지 전송</h2>
-    
-    <h3>🚨 현재 제한사항</h3>
-    <p>개인 OAuth 토큰으로는 본인에게만 메시지를 보낼 수 있습니다.</p>
-    <p>다른 사용자들에게 메뉴를 전송하려면 다음 방법들을 사용해야 합니다:</p>
-    
-    <h3>💡 해결 방안</h3>
-    
-    <h4>방법 1: 카카오톡 채널 생성</h4>
-    <ol>
-        <li><a href="https://center-pf.kakao.com/" target="_blank">카카오톡 채널 관리자센터</a>에서 채널 생성</li>
-        <li>채널에 친구들이 구독</li>
-        <li>채널 메시지 API를 통해 구독자들에게 전송</li>
-    </ol>
-    
-    <h4>방법 2: 카카오톡 챗봇 (추천)</h4>
-    <ol>
-        <li>사용자가 봇에게 "메뉴" 메시지 전송</li>
-        <li>웹훅을 통해 자동 응답</li>
-        <li>개별 사용자별 요청-응답 방식</li>
-    </ol>
-    
-    <h4>방법 3: 웹 링크 공유</h4>
-    <ul>
-        <li>웹 페이지: <a href="http://210.107.197.228:5003/menu-web" target="_blank">http://210.107.197.228:5003/menu-web</a> (한글 정상 표시)</li>
-        <li>API 형태: <code>http://210.107.197.228:5003/menu</code> (JSON 응답)</li>
-        <li>사용자들이 직접 링크 접속하여 메뉴 확인</li>
-    </ul>
-    
-    <h3>🔧 현재 구현된 기능</h3>
-    <ul>
-        <li> 웹훅 기반 챗봇 (webhook 엔드포인트 구현됨)</li>
-        <li>메뉴 조회 API</li>
-        <li>자동 스케줄링 (매일 12시)</li>
-        <li>다중 사용자 메시지 전송 (채널 필요)</li>
-    </ul>
-    
-    <p><a href="/webhook-test">웹훅 챗봇 테스트하기</a></p>
-    '''
+    """TBD: 카카오톡 채널 설정 안내"""
+    return 
 
 @app.route('/favicon.ico')
 def favicon():
